@@ -117,11 +117,18 @@ def name_search():
     query = request.args.get("q")
 
     if not query:
-        return {"error_message":"Invalid input parameter"}, 422
+        return {"message":"Invalid input parameter"}, 422
 
     # this code goes through data and looks for the first_name
     for person in data:
         if query.lower() in person["first_name"].lower():
             return person
 
-    return {"error_message":"Person not found"}, 404
+    return {"message":"Person not found"}, 404
+
+@app.route("/count")
+def count():
+    try:
+        return {"data count": f"{len(data)} items found"}, 200
+    except NameError:
+        return {"message": "Data not defined"}, 500
