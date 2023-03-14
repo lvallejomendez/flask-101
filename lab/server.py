@@ -1,4 +1,8 @@
+"""
+Creation of a Flask service
+"""
 from flask import Flask, make_response, request
+
 app = Flask(__name__)
 
 ###################################################
@@ -75,7 +79,8 @@ def index():
 # Send custom HTTP code back with a tuple.
 @app.route("/no_content")
 def no_content():
-    """return 'No content found' with a status of 204
+    """
+    Return 'No content found' with a status of 204
     Returns:
         string: No content found
         status code: 204
@@ -85,7 +90,8 @@ def no_content():
 # Send custom HTTP code back with the make_response() method.
 @app.route("/exp")
 def index_explicit():
-    """return 'Hello World!' message with a status code of 200
+    """
+    Return 'Hello World!' message with a status code of 200
     Returns:
         string: Hello World!
         status code: 200
@@ -108,7 +114,8 @@ def get_data():
 
 @app.route("/name_search")
 def name_search():
-    """find a person in the database
+    """
+    Find a person in the database
     Returns:
         json: person if found, with status of 200
         404: if not found
@@ -117,11 +124,29 @@ def name_search():
     query = request.args.get("q")
 
     if not query:
-        return {"error_message":"Invalid input parameter"}, 422
+        return {"message":"Invalid input parameter"}, 422
 
     # this code goes through data and looks for the first_name
     for person in data:
         if query.lower() in person["first_name"].lower():
             return person
 
-    return {"error_message":"Person not found"}, 404
+    return {"message":"Person not found"}, 404
+
+@app.route("/count")
+def count():
+    try:
+        return {"data count": f"{len(data)} items found"}, 200
+    except NameError:
+        return {"message": "Data not defined"}, 500
+
+@app.route("/person/<uuid:id>")
+def find_by_uuid(id):
+    """
+    Reads an Account
+    This endpoint will ask for a person based on the id that is requested
+    """
+    for person in data:
+        if person["id"] == str(id):
+            return person
+    return {"message":"Person not found"}, 404
