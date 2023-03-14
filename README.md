@@ -1,2 +1,7 @@
-# flask-101
+# Flask-101
 Getting started with Flask
+
+* Create a Flask application that responds to user requests at specific URLs.
+* Handling both server and user errors.
+* Call external APIs from Flask.
+* Create a service that gets pictures from past events stored in cloud object storage (IBM Cloud).
