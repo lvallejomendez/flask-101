@@ -157,3 +157,16 @@ def find_by_uuid(id):
         if person["id"] == str(id):
             return person
     return {"message": "Person not found"}, 404
+
+
+@app.route("/person/<uuid:id>", methods=["GET", "DELETE"])
+def delete_by_uuid(id):
+    """
+    Delete an Account
+    This endpoint will delete a person based on the id
+    """
+    for person in data:
+        if person["id"] == str(id):
+            data.remove(person)
+            return {"message":f"id deleted: {id}"}, 200
+    return {"message": "Person not found"}, 404
