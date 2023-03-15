@@ -73,6 +73,7 @@ data = [
 def index():
     return "Hello World!"
 
+
 # flask --app server --debug run
 # in another terminal run: curl -X GET -i -w '\n' localhost:5000
 
