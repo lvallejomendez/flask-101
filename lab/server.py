@@ -76,9 +76,6 @@ def index():
     return "Hello World!"
 
 
-# run: flask --app server --debug run
-# in another terminal run: curl -X GET -i -w '\n' localhost:5000
-
 # Send custom HTTP code back with a tuple.
 @app.route("/no_content")
 def no_content():
@@ -159,7 +156,7 @@ def find_by_uuid(id):
     return {"message": "Person not found"}, 404
 
 
-@app.route("/person/<uuid:id>", methods=["GET", "DELETE"])
+@app.route("/person/<uuid:id>", methods=["DELETE"])
 def delete_by_uuid(id):
     """
     Delete an Account
@@ -170,3 +167,36 @@ def delete_by_uuid(id):
             data.remove(person)
             return {"message": f"id deleted: {id}"}, 200
     return {"message": "Person not found"}, 404
+
+
+@app.route("/person", methods=["POST"])
+def add_by_uuid():
+    """
+    Add an Account
+    This endpoint will add a new person
+    """
+    new_person = request.json
+    if not new_person:
+        return {"message": "Invalid input parameter"}, 422
+    # code to validate new_person ommited
+    try:
+        data.append(new_person)
+    except NameError:
+        return {"message": "data not defined"}, 500
+
+    return {"message": f"{new_person['id']}"}, 200
+
+
+@app.errorhandler(404)
+def api_not_found(error):
+    """
+    Error handler
+    This endpoint will show a JSON error response for invalid request
+    """
+    return {"message": "API not found"}, 404
+
+
+###################################################
+# run: flask --app server --debug run
+# in another terminal run: curl -X GET -i -w '\n' localhost:5000
+###################################################
