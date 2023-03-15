@@ -1,5 +1,5 @@
 install: 
-	python3 -m pip install --upgrade pip wheel &&\
+	pip install --upgrade pip wheel &&\
 		pip install -r requirements.txt
 		
 test:
