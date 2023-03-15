@@ -6,7 +6,7 @@ from flask import Flask, make_response, request
 app = Flask(__name__)
 
 ###################################################
-# Hard coded list for this simple use case. This data was generated with Mockaroo.
+# Hard coded list for this simple use case. Data generated with Mockaroo
 ###################################################
 data = [
     {
@@ -63,18 +63,20 @@ data = [
         "zip": "80305",
         "country": "United States",
         "avatar": "http://dummyimage.com/198x100.png/cc0000/ffffff",
-    }
+    },
 ]
 
 ###################################################
+# This code creates a Flask server and adds a home endpoint “/“ that returns
+# the string hello world.
 
-# This code creates a Flask server and adds a home endpoint “/“ that returns the string hello world.
+
 @app.route("/")
 def index():
     return "Hello World!"
 
 
-# flask --app server --debug run
+# run: flask --app server --debug run
 # in another terminal run: curl -X GET -i -w '\n' localhost:5000
 
 # Send custom HTTP code back with a tuple.
@@ -86,7 +88,8 @@ def no_content():
         string: No content found
         status code: 204
     """
-    return ({"message":"No content found"}, 204)
+    return ({"message": "No content found"}, 204)
+
 
 # Send custom HTTP code back with the make_response() method.
 @app.route("/exp")
@@ -97,11 +100,12 @@ def index_explicit():
         string: Hello World!
         status code: 200
     """
-    resp = make_response({"message":"Hello World!"})
+    resp = make_response({"message": "Hello World!"})
     resp.status_code = 200
     return resp
 
-# Create an end point that returns the person’s data to the client in JSON format.
+
+# Endpoint that returns the person’s data to the client in JSON format.
 @app.route("/data")
 def get_data():
     try:
@@ -125,14 +129,15 @@ def name_search():
     query = request.args.get("q")
 
     if not query:
-        return {"message":"Invalid input parameter"}, 422
+        return {"message": "Invalid input parameter"}, 422
 
     # this code goes through data and looks for the first_name
     for person in data:
         if query.lower() in person["first_name"].lower():
             return person
 
-    return {"message":"Person not found"}, 404
+    return {"message": "Person not found"}, 404
+
 
 @app.route("/count")
 def count():
@@ -140,6 +145,7 @@ def count():
         return {"data count": f"{len(data)} items found"}, 200
     except NameError:
         return {"message": "Data not defined"}, 500
+
 
 @app.route("/person/<uuid:id>")
 def find_by_uuid(id):
@@ -150,4 +156,4 @@ def find_by_uuid(id):
     for person in data:
         if person["id"] == str(id):
             return person
-    return {"message":"Person not found"}, 404
+    return {"message": "Person not found"}, 404
