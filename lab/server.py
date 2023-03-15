@@ -187,6 +187,15 @@ def add_by_uuid():
     return {"message": f"{new_person['id']}"}, 200
 
 
+@app.errorhandler(404)
+def api_not_found(error):
+    """
+    Error handler
+    This endpoint will show a JSON error response for invalid request
+    """
+    return {"message": "API not found"}, 404
+
+
 ###################################################
 # run: flask --app server --debug run
 # in another terminal run: curl -X GET -i -w '\n' localhost:5000
