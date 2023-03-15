@@ -168,5 +168,5 @@ def delete_by_uuid(id):
     for person in data:
         if person["id"] == str(id):
             data.remove(person)
-            return {"message":f"id deleted: {id}"}, 200
+            return {"message": f"id deleted: {id}"}, 200
     return {"message": "Person not found"}, 404
