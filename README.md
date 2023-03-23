@@ -7,4 +7,3 @@ Getting started with Flask. This is a lab part of the [Back-end Application Deve
 * Create a Flask application that responds to user requests at specific URLs.
 * Handling both server and user errors.
 * Call external APIs from Flask.
-* Create a service that gets pictures from past events stored in cloud object storage (IBM Cloud).
